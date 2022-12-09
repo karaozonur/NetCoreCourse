@@ -15,6 +15,10 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         private IProductDal _productDal;
+        public ProductManager(IProductDal productDal)
+        {
+            _productDal = productDal;   
+        }
         public IResult Add(Product product)
         {
             //Daha önce ekelenen ürün vs filtremesi
@@ -39,6 +43,8 @@ namespace Business.Concrete
             return new SuccessDataResults<Product>(_productDal.Get(filter: _productDal => _productDal.ProductID == productID));
         }
 
+       
+
         //public List<Product> GetList()
         //{
         //    return _productDal.GetList().ToList();
@@ -48,6 +54,12 @@ namespace Business.Concrete
         {
             return new SuccessDataResults<List<Product>> (_productDal.GetList().ToList());
         }
+        public IDataResults<Product> GetByID(int productID)
+        {
+            return new SuccessDataResults<Product>(_productDal.Get(filter: p => p.ProductID == productID));
+        }
+
+        
 
         //public List<Product> GetListByCategory(int categoryID)
         //{
