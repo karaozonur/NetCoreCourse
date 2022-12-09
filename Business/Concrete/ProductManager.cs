@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
@@ -13,36 +15,54 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         private IProductDal _productDal;
-        public void Add(Product product)
+        public IResult Add(Product product)
         {
             //Daha önce ekelenen ürün vs filtremesi
-             _productDal.Add(product);
+            _productDal.Add(product);
+            return new SuccessResults(true, Messages.ProductAdd);
         }
 
-        public void Delete(Product product)
+        public IResult Delete(Product product)
         {
             _productDal.Delete(product);
+            return new SuccessResults(true, Messages.ProductDelete);
         }
 
-        public Product Get(int productID)
+        //GET
+        //public Product Get(int productID)
+        //{
+        //   
+        //    return _productDal.Get(filter: _productDal => _productDal.ProductID == productID);
+        //}
+        public IDataResults<Product> Get(int productID)
         {
-            //EFProductDal p = new EFProductDal();
-            return _productDal.Get(filter: _productDal => _productDal.ProductID == productID);
+            return new SuccessDataResults<Product>(_productDal.Get(filter: _productDal => _productDal.ProductID == productID));
         }
 
-        public List<Product> GetList()
+        //public List<Product> GetList()
+        //{
+        //    return _productDal.GetList().ToList();
+        //}
+
+        public IDataResults<List<Product>> GetList()
         {
-            return _productDal.GetList().ToList();
+            return new SuccessDataResults<List<Product>> (_productDal.GetList().ToList());
         }
 
-        public List<Product> GetListByCategory(int categoryID)
+        //public List<Product> GetListByCategory(int categoryID)
+        //{
+        //    return _productDal.GetList().Where(z=>z.CategoryId==categoryID).ToList();
+        //}
+
+        public IDataResults<List<Product>> GetListByCategory(int categoryID)
         {
-            return _productDal.GetList().Where(z=>z.CategoryId==categoryID).ToList();
+            return new SuccessDataResults<List<Product>> (_productDal.GetList().Where(z => z.CategoryId == categoryID).ToList());
         }
 
-        public void Update(Product product)
+        public IResult Update(Product product)
         {
             _productDal.Update(product);
+            return new SuccessResults(true, Messages.ProductUpdate);
         }
     }
 }
