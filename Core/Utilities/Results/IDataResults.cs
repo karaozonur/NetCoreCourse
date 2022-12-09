@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Results
 {
-    public interface IDataResults<T>:IResult
+    public interface IDataResults<out T>:IResult
     {
         T Data { get;  }
     }

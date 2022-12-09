@@ -10,11 +10,11 @@ namespace Core.Utilities.Results
     {
         public DataResults(T data,bool success,string message): base(success, message)
         {
-            Data = Data;
+            Data = data;
         }
         public DataResults(T data, bool success) : base(success)
         {
-            Data = Data;
+            Data = data;
         }
 
         public T Data { get; }

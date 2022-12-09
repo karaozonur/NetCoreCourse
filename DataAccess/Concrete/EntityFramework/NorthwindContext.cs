@@ -20,6 +20,12 @@ namespace DataAccess.Concrete.EntityFramework
             ;
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Categories>().HasNoKey();
+        }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Categories> Categories { get; set; }
     }
 }
